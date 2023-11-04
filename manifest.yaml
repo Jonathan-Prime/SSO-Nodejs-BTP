@@ -1,0 +1,24 @@
+applications:
+- name: myapp
+  random-route: true
+  path: myapp
+  memory: 128M
+  buildpacks: 
+  - nodejs_buildpack
+  services:
+  - nodeuaa
+- name: web
+  random-route: true
+  path: web
+  memory: 128M
+  env:
+    destinations: >
+      [
+        {
+          "name":"myapp",
+          "url":"https://myapp-purple-tiger.cfapps.eu20.hana.ondemand.com",
+          "forwardAuthToken": true
+        }
+      ]
+  services:
+  - nodeuaa
